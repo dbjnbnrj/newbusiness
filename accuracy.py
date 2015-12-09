@@ -216,7 +216,7 @@ logistic = linear_model.LogisticRegression()
 clf = SVC(kernel='rbf')
 
 result = {}
-for k in range(6, 18):
+for k in range(13, 14):
     result[k] = 0
     pd_lasvegas = pickle.load( open('pd_lasvegas_'+str(k)+'.pkl', 'rb'))
     pd_lasvegas = pd_lasvegas[np.isfinite(pd_lasvegas[u'attributes_Price Range'])]
@@ -226,8 +226,8 @@ for k in range(6, 18):
     pd_lasvegas.reset_index(level=0, inplace=True)
     pd_old_business_vegas = pd_lasvegas[pd_lasvegas['new'] == False]
     pd_new_business_vegas = pd_lasvegas[pd_lasvegas['new'] == True]
-    for c in range(k):
-        X, Y = createTrainingData(cluster=c, sampleAll=False, maxsamples=20000)
+    for c in range(8, k):
+        X, Y = createTrainingData(cluster=c, sampleAll=False, maxsamples=10000)
         X_np, Y_np = np.array(X), np.array(Y)
         scores = cross_validation.cross_val_score(logistic, X_np, Y_np, cv=5)
         result[k] += scores.mean()
